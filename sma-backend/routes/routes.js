@@ -6,7 +6,9 @@ const router = Router()
 
 
 router.use("/auth",authRoute)
+router.use(authentication)
 router.use("/posts",postsRoute)
-
+router.patch("/posts", postsRoute);
+router.delete("/posts", postsRoute);
 
 export default router;
