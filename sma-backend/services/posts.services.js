@@ -5,14 +5,15 @@ const prisma = new PrismaClient();
 
 const eventEmitter=new EventEmitter();
 
-eventEmitter.on("greet",()=>{
-    console.log("Hello");
+eventEmitter.on("greet", (message) => {
+    console.log("Hello! Good Morning!");
+    console.log("Message: ", message)
 })
 
-eventEmitter.emit("greet");
 
 
 const createPosts = async (req) => {
+    eventEmitter.emit("greet", "Create Post Called")
   const { content } = req.body;
   console.log("Server at  createpost service");
   console.log("req.body: ", req.body);
@@ -29,6 +30,7 @@ const createPosts = async (req) => {
   return { result }; //creation of a post
 };
 const listPosts = async (req) => {
+    eventEmitter.emit("greet", "List Post Called")
   const userId = req.body.userId; // Logged-in user's ID
   const searchParams = req.query.search?.trim() || '';
 
@@ -75,6 +77,7 @@ const listPosts = async (req) => {
 //newpost update
 
 const updatePosts = async (req) => {
+    eventEmitter.emit("greet", "Update Post Called")
     const {content,id,like} = req.body;
     const postId = req.params.id; // Fix: Extract `id` correctly
 
@@ -109,6 +112,7 @@ const updatePosts = async (req) => {
     return { result };
 };
 const deletePosts = async (req) => {
+    eventEmitter.emit("greet", "Delete Post Called")
 const postId = req.params.id;
     
         const checkPostExist = await prisma.post.findFirst({
